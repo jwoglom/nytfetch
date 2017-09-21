@@ -22,7 +22,7 @@ def find_urls(date):
     start_dates = {
         "nat_pdf": (2012, 7, 6),
         "int_pdf": (2012, 7, 6),
-        "jpg": (1856, 1, 14)
+        "jpg": (1851, 9, 18)
     }
     urls = {
         "nat_pdf": "http://www.nytimes.com/images/{date}/nytfrontpage/scannat.pdf",
