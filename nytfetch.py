@@ -40,6 +40,9 @@ def download_urls(date, urls, opts):
     for u in urls:
         folderpath = opts['out'] + '/' + sdate + '/'
         filename = u.split('/')[-1]
+        if os.path.exists(folderpath+filename) and opts['skipexisting']:
+            print("Already downloaded", folderpath+filename)
+            continue
         req = requests.get(u)
         if req.ok:
             open(folderpath + filename, 'wb').write(req.content)
@@ -66,10 +69,11 @@ if __name__ == '__main__':
     parser.add_argument('--date', dest='date', help='a date in format YYYYMMDD')
     parser.add_argument('--start-date', dest='startdate', help='a start date in format YYYYMMDD')
     parser.add_argument('--end-date', dest='enddate', help='an end date (inclusive) in format YYYYMMDD')
+    parser.add_argument('--skip-existing', action='store_true', dest='skipexisting', help='whether to skip downloads of existing files in output')
     parser.add_argument('--out', dest='out', default='out', help='out directory (default ./out)')
 
     args = parser.parse_args()
-    opts = {'out': args.out}
+    opts = {'out': args.out, 'skipexisting': args.skipexisting}
 
     if args.date:
         date = parse_date(args.date)
